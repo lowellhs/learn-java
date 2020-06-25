@@ -1,6 +1,8 @@
 import java.util.Scanner;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class Basics {
     public static void main(String[] args) {
@@ -93,18 +95,31 @@ public class Basics {
         System.out.println("Got string :\n" + a_multi_line);
 
         // FILE I/O
-        FileInputStream in, out;
+        // Reading from file input.txt
+        File fileIn = new File("input.txt");
+        FileInputStream in = null;
         try {
-            in = new FileInputStream("coba.txt");
-            String texts = "";
-            int cc;
-            while ((cc = in.read()) != -1) {
-                texts += (char)cc;
-            }
-            System.out.println(texts);
+            // Read as Bytes, can read per character also
+            in = new FileInputStream(fileIn);
+            byte[] fileContent = new byte[(int)fileIn.length()];
+            in.read(fileContent);
+            in.close();
+            String s = new String(fileContent);
+            System.out.println(s);
         } catch (Exception err) {
             err.printStackTrace();
         }
-
+        // Writing to file output.txt
+        File fileOut = new File("output.txt");
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(fileOut);
+            String str = "Hello World!\nLowell is Here";
+            byte strBytes[] = str.getBytes();
+            out.write(strBytes);
+            out.close();
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
     }
 }
